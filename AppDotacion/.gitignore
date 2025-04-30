@@ -1,0 +1,24 @@
+# Visual Studio
+.vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+out/
+
+# Logs
+*.log
+
+# User-specific files
+*.rsuser
+*.ide
+*.sln.ide
+
+# Secrets
+appsettings.json
+appsettings.*.json

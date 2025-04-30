@@ -1,0 +1,65 @@
+﻿@model AppDotacion.Models.Dotacion
+
+<div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+<input type="hidden" asp-for="ID" />
+<input type="hidden" asp-for="Fecha_IngresoInt" />
+<input type="hidden" asp-for="Fecha_BajaInt" />
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <label asp-for="Rut_DNI" class="form-label"></label>
+        <input asp-for="Rut_DNI" class="form-control" />
+        <span asp-validation-for="Rut_DNI" class="text-danger"></span>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label asp-for="Agente" class="form-label"></label>
+        <input asp-for="Agente" class="form-control" />
+        <span asp-validation-for="Agente" class="text-danger"></span>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label asp-for="Pais_Call_Center" class="form-label"></label>
+        <select asp-for="Pais_Call_Center" class="form-select">
+            <option value="">-- Seleccione País --</option>
+            @foreach (var item in ViewData["Paises"] as IEnumerable<string> ?? Enumerable.Empty<string>())
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+        <span asp-validation-for="Pais_Call_Center" class="text-danger"></span>
+    </div>
+</div>
+
+<!-- Agrega aquí todos los demás campos del formulario -->
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <label asp-for="CARGO" class="form-label"></label>
+        <input asp-for="CARGO" class="form-control" />
+        <span asp-validation-for="CARGO" class="text-danger"></span>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label asp-for="Fecha_Ingreso" class="form-label"></label>
+        <input asp-for="Fecha_Ingreso" class="form-control" type="date"
+               value="@(Model.Fecha_Ingreso.HasValue ? Model.Fecha_Ingreso.Value.ToString("yyyy-MM-dd") : "")" />
+        <span asp-validation-for="Fecha_Ingreso" class="text-danger"></span>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label asp-for="Fecha_Baja" class="form-label"></label>
+        <input asp-for="Fecha_Baja" class="form-control" type="date"
+               value="@(Model.Fecha_Baja.HasValue ? Model.Fecha_Baja.Value.ToString("yyyy-MM-dd") : "")" />
+        <span asp-validation-for="Fecha_Baja" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <label asp-for="N_Personal" class="form-label"></label>
+        <input asp-for="N_Personal" class="form-control" type="number" />
+        <span asp-validation-for="N_Personal" class="text-danger"></span>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label asp-for="Correo" class="form-label"></label>
+        <input asp-for="Correo" class="form-control" />
+        <span asp-validation-for="Correo" class="text-danger"></span>
+    </div>
+</div>

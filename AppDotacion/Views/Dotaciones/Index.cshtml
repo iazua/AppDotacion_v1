@@ -1,0 +1,256 @@
+﻿@model IEnumerable<AppDotacion.Models.Dotacion>
+
+@{
+    ViewData["Title"] = "Dotaciones";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+        </div>
+        <div class="col-md-4 text-end">
+            <a asp-action="Create" class="btn btn-success">
+                <i class="fas fa-plus-circle"></i> Nueva Dotación
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary text-white">
+            <h6 class="m-0 font-weight-bold">Filtros de Búsqueda</h6>
+        </div>
+        <div class="card-body">
+            <form method="get" class="mb-4">
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <input type="text" name="Rut_DNI" class="form-control" placeholder="Rut DNI"
+                               value="@ViewContext.HttpContext.Request.Query["Rut_DNI"].FirstOrDefault()" />
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <input type="text" name="Agente" class="form-control" placeholder="Agente"
+                               value="@ViewContext.HttpContext.Request.Query["Agente"].FirstOrDefault()" />
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <select name="Pais_Call_Center" class="form-control">
+                            <option value="">Seleccione País</option>
+                            @if (ViewData["Pais_Call_Center"] is IEnumerable<string> paises)
+                            {
+                                foreach (var item in paises.Where(x => !string.IsNullOrEmpty(x)))
+                                {
+                                    <option value="@item"
+                                            selected="@(ViewContext.HttpContext.Request.Query["Pais_Call_Center"].FirstOrDefault() == item)">
+                                        @item
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <select name="Area" class="form-control">
+                            <option value="">Seleccione Área</option>
+                            @if (ViewData["Area"] is IEnumerable<string> areas)
+                            {
+                                foreach (var item in areas.Where(x => !string.IsNullOrEmpty(x)))
+                                {
+                                    <option value="@item"
+                                            selected="@(ViewContext.HttpContext.Request.Query["Area"].FirstOrDefault() == item)">
+                                        @item
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <select name="AreaGestion" class="form-control">
+                            <option value="">Área de Gestión</option>
+                            @if (ViewData["AreaGestion"] is IEnumerable<string> areasGestion)
+                            {
+                                foreach (var item in areasGestion.Where(x => !string.IsNullOrEmpty(x)))
+                                {
+                                    <option value="@item"
+                                            selected="@(ViewContext.HttpContext.Request.Query["AreaGestion"].FirstOrDefault() == item)">
+                                        @item
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <select name="Contrato" class="form-control">
+                            <option value="">Tipo de Contrato</option>
+                            @if (ViewData["Contrato"] is IEnumerable<string> contratos)
+                            {
+                                foreach (var item in contratos.Where(x => !string.IsNullOrEmpty(x)))
+                                {
+                                    <option value="@item"
+                                            selected="@(ViewContext.HttpContext.Request.Query["Contrato"].FirstOrDefault() == item)">
+                                        @item
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <select name="Tipos_de_agente" class="form-control">
+                            <option value="">Tipo de Agente</option>
+                            @if (ViewData["Tipos_de_agente"] is IEnumerable<string> tiposAgente)
+                            {
+                                foreach (var item in tiposAgente.Where(x => !string.IsNullOrEmpty(x)))
+                                {
+                                    <option value="@item"
+                                            selected="@(ViewContext.HttpContext.Request.Query["Tipos_de_agente"].FirstOrDefault() == item)">
+                                        @item
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <select name="Servicio" class="form-control">
+                            <option value="">Servicio</option>
+                            @if (ViewData["Servicio"] is IEnumerable<string> servicios)
+                            {
+                                foreach (var item in servicios.Where(x => !string.IsNullOrEmpty(x)))
+                                {
+                                    <option value="@item"
+                                            selected="@(ViewContext.HttpContext.Request.Query["Servicio"].FirstOrDefault() == item)">
+                                        @item
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <input type="text" name="search" class="form-control" placeholder="Buscar en todos los campos"
+                               value="@ViewContext.HttpContext.Request.Query["search"].FirstOrDefault()" />
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                    </div>
+                    <div class="col-md-3">
+                        <a asp-action="Index" class="btn btn-secondary w-100">Limpiar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-container" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                <table class="table table-striped table-hover table-bordered" width="100%" cellspacing="0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Modificar</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Rut_DNI)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Agente)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Pais_Call_Center)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Nombre_Call_Center)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Area)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().AreaGestion)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Contrato)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Tipos_de_agente)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Servicio)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Usuarios_RcWeb)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Nombre_Jefatura)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Rut_Ficticio)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Rut_DNI2)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().DV)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Clasifica_Cargo)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().CARGO)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Fecha_Ingreso)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Fecha_Baja)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().N_Personal)</th>
+                            <th>@Html.DisplayNameFor(model => model.First().Correo)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-sm btn-primary" title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td>@item.Rut_DNI</td>
+                                <td>@item.Agente</td>
+                                <td>@item.Pais_Call_Center</td>
+                                <td>@item.Nombre_Call_Center</td>
+                                <td>@item.Area</td>
+                                <td>@item.AreaGestion</td>
+                                <td>@item.Contrato</td>
+                                <td>@item.Tipos_de_agente</td>
+                                <td>@item.Servicio</td>
+                                <td>@item.Usuarios_RcWeb</td>
+                                <td>@item.Nombre_Jefatura</td>
+                                <td>@item.Rut_Ficticio</td>
+                                <td>@item.Rut_DNI2</td>
+                                <td>@item.DV</td>
+                                <td>@item.Clasifica_Cargo</td>
+                                <td>@item.CARGO</td>
+                                <td>@item.Fecha_Ingreso</td>
+                                <td>@item.Fecha_Baja</td>
+                                <td>@item.N_Personal</td>
+                                <td>@item.Correo</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info text-center mt-3">
+                    No se encontraron registros de dotaciones.
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Ocultar alerta después de 5 segundos
+            setTimeout(function () {
+                $('.alert').fadeOut('slow');
+            }, 5000);
+
+            // Inicializar DataTable con scroll horizontal
+            $('.table').DataTable({
+                dom: '<"top"lf>rt<"bottom"ip>',
+                scrollX: true,
+                scrollCollapse: true,
+                fixedColumns: {
+                    leftColumns: 1 // Fijar la columna de Modificar
+                },
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                },
+                pageLength: 10,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]]
+            });
+
+            // Resetear los dropdowns al hacer clic en Limpiar
+            $('a[href*="Index"]').click(function() {
+                $('select').val('');
+            });
+        });
+    </script>
+}
