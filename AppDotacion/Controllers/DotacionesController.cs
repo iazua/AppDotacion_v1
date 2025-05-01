@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using AppDotacion.Data;
 using AppDotacion.Models;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace AppDotacion.Controllers
 {
@@ -243,6 +245,55 @@ namespace AppDotacion.Controllers
 
             ViewData["Nombre_Jefatura"] = emptyList.Concat(await _context.Dotaciones
                 .Select(d => d.Nombre_Jefatura)
+                .Distinct()
+                .Where(d => d != null)
+                .OrderBy(d => d)
+                .ToListAsync()).ToList();
+
+            ViewData["Nombre_Call_Center"] = emptyList.Concat(await _context.Dotaciones
+                .Select(d => d.Nombre_Call_Center)
+                .Distinct()
+                .Where(d => d != null)
+                .OrderBy(d => d)
+                .ToListAsync()).ToList();
+
+            ViewData["Usuarios_RcWeb"] = emptyList.Concat(await _context.Dotaciones
+                .Select(d => d.Usuarios_RcWeb)
+                .Distinct()
+                .Where(d => d != null)
+                .OrderBy(d => d)
+                .ToListAsync()).ToList();
+
+            ViewData["Rut_Ficticio"] = emptyList.Concat(await _context.Dotaciones
+                .Select(d => d.Rut_Ficticio)
+                .Distinct()
+                .Where(d => d != null)
+                .OrderBy(d => d)
+                .ToListAsync()).ToList();
+
+            ViewData["Rut_DNI2"] = emptyList.Concat(await _context.Dotaciones
+                .Select(d => d.Rut_DNI2)
+                .Distinct()
+                .Where(d => d != null)
+                .OrderBy(d => d)
+                .ToListAsync()).ToList();
+
+            ViewData["Clasifica_Cargo"] = emptyList.Concat(await _context.Dotaciones
+                .Select(d => d.Clasifica_Cargo)
+                .Distinct()
+                .Where(d => d != null)
+                .OrderBy(d => d)
+                .ToListAsync()).ToList();
+
+            ViewData["CARGO"] = emptyList.Concat(await _context.Dotaciones
+                .Select(d => d.CARGO)
+                .Distinct()
+                .Where(d => d != null)
+                .OrderBy(d => d)
+                .ToListAsync()).ToList();
+
+            ViewData["Correo"] = emptyList.Concat(await _context.Dotaciones
+                .Select(d => d.Correo)
                 .Distinct()
                 .Where(d => d != null)
                 .OrderBy(d => d)

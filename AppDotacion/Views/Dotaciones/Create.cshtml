@@ -46,8 +46,15 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label asp-for="Nombre_Call_Center" class="control-label"></label>
-                        <input asp-for="Nombre_Call_Center" class="form-control" />
+                        <select asp-for="Nombre_Call_Center" class="form-control" />
+                        <option value="">Selecione Call Center</option>
+                        @foreach (var item in ViewData["Nombre_Call_Center"] as IEnumerable<string> ?? Enumerable.Empty<string>())
+                        {
+                            <option value="@item">@item</option>
+                        }
+                        </select>
                         <span asp-validation-for="Nombre_Call_Center" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -227,4 +234,31 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        $(document).ready(function() {
+            // Configuración para hacer que todos los campos sean opcionales
+            $("#dotacionForm").removeData("validator");
+            $("#dotacionForm").removeData("unobtrusiveValidation");
+            $.validator.unobtrusive.parse("#dotacionForm");
+
+            // Seleccionar automáticamente las opciones en los dropdowns
+            $('select').each(function() {
+                var select = $(this);
+                var currentValue = select.attr('value') || select.val();
+                if (currentValue) {
+                    select.find('option[value="' + currentValue + '"]').prop('selected', true);
+                }
+            });
+
+            // Manejar el formato de fecha para mostrar en el formato local
+            $("input[type='date']").each(function() {
+                if (this.value) {
+                    var date = new Date(this.value);
+                    if (!isNaN(date.getTime())) {
+                        this.valueAsDate = date;
+                    }
+                }
+            });
+        });
+    </script>
 }

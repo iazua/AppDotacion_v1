@@ -4,227 +4,241 @@
     ViewData["Title"] = "Editar Dotación";
 }
 
-<div class="container-fluid">
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
-        </div>
-        <div class="col-md-4 text-end">
-            <a asp-action="Index" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Volver al listado
-            </a>
-        </div>
-    </div>
+<h1>@ViewData["Title"]</h1>
 
-    <div class="card shadow">
-        <div class="card-body">
-            <form asp-action="Edit" id="dotacionForm">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-                <input type="hidden" asp-for="ID" />
-                <input type="hidden" asp-for="Fecha_IngresoInt" />
-                <input type="hidden" asp-for="Fecha_BajaInt" />
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" method="post" id="dotacionForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="row">
-                    <!-- Columna 1 -->
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label asp-for="Rut_DNI" class="form-label"></label>
-                            <input asp-for="Rut_DNI" class="form-control" />
-                            <span asp-validation-for="Rut_DNI" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Agente" class="form-label"></label>
-                            <input asp-for="Agente" class="form-control" />
-                            <span asp-validation-for="Agente" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Pais_Call_Center" class="form-label"></label>
-                            <select asp-for="Pais_Call_Center" class="form-select">
-                                <option value="">-- Seleccione País --</option>
-                                @foreach (var item in ViewBag.Paises as IEnumerable<string> ?? Enumerable.Empty<string>())
-                                {
-                                    <option value="@item">@item</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Pais_Call_Center" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Nombre_Call_Center" class="form-label"></label>
-                            <input asp-for="Nombre_Call_Center" class="form-control" />
-                            <span asp-validation-for="Nombre_Call_Center" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Area" class="form-label"></label>
-                            <select asp-for="Area" class="form-select">
-                                <option value="">-- Seleccione Área --</option>
-                                @foreach (var item in ViewBag.Areas as IEnumerable<string> ?? Enumerable.Empty<string>())
-                                {
-                                    <option value="@item">@item</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Area" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <!-- Columna 2 -->
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label asp-for="AreaGestion" class="form-label"></label>
-                            <select asp-for="AreaGestion" class="form-select">
-                                <option value="">-- Seleccione Área Gestión --</option>
-                                @foreach (var item in ViewBag.AreasGestion as IEnumerable<string> ?? Enumerable.Empty<string>())
-                                {
-                                    <option value="@item">@item</option>
-                                }
-                            </select>
-                            <span asp-validation-for="AreaGestion" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Contrato" class="form-label"></label>
-                            <select asp-for="Contrato" class="form-select">
-                                <option value="">-- Seleccione Contrato --</option>
-                                @foreach (var item in ViewBag.Contratos as IEnumerable<string> ?? Enumerable.Empty<string>())
-                                {
-                                    <option value="@item">@item</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Contrato" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Tipos_de_agente" class="form-label"></label>
-                            <select asp-for="Tipos_de_agente" class="form-select">
-                                <option value="">-- Seleccione Tipo Agente --</option>
-                                @foreach (var item in ViewBag.TiposAgente as IEnumerable<string> ?? Enumerable.Empty<string>())
-                                {
-                                    <option value="@item">@item</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Tipos_de_agente" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Servicio" class="form-label"></label>
-                            <select asp-for="Servicio" class="form-select">
-                                <option value="">-- Seleccione Servicio --</option>
-                                @foreach (var item in ViewBag.Servicios as IEnumerable<string> ?? Enumerable.Empty<string>())
-                                {
-                                    <option value="@item">@item</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Servicio" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Usuarios_RcWeb" class="form-label"></label>
-                            <input asp-for="Usuarios_RcWeb" class="form-control" />
-                            <span asp-validation-for="Usuarios_RcWeb" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <!-- Columna 3 -->
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label asp-for="Nombre_Jefatura" class="form-label"></label>
-                            <select asp-for="Nombre_Jefatura" class="form-select">
-                                <option value="">-- Seleccione Jefatura --</option>
-                                @foreach (var item in ViewBag.Jefaturas as IEnumerable<string> ?? Enumerable.Empty<string>())
-                                {
-                                    <option value="@item">@item</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Nombre_Jefatura" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Rut_Ficticio" class="form-label"></label>
-                            <input asp-for="Rut_Ficticio" class="form-control" />
-                            <span asp-validation-for="Rut_Ficticio" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Rut_DNI2" class="form-label"></label>
-                            <input asp-for="Rut_DNI2" class="form-control" />
-                            <span asp-validation-for="Rut_DNI2" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="DV" class="form-label"></label>
-                            <input asp-for="DV" class="form-control" type="number" />
-                            <span asp-validation-for="DV" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Clasifica_Cargo" class="form-label"></label>
-                            <input asp-for="Clasifica_Cargo" class="form-control" />
-                            <span asp-validation-for="Clasifica_Cargo" class="text-danger"></span>
-                        </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Rut_DNI" class="control-label"></label>
+                        <input asp-for="Rut_DNI" class="form-control" />
+                        <span asp-validation-for="Rut_DNI" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Agente" class="control-label"></label>
+                        <input asp-for="Agente" class="form-control" />
+                        <span asp-validation-for="Agente" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Pais_Call_Center" class="control-label"></label>
+                        <select asp-for="Pais_Call_Center" class="form-control">
+                            <option value="">Seleccione País</option>
+                            @foreach (var item in ViewData["Pais_Call_Center"] as IEnumerable<string> ?? Enumerable.Empty<string>())
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Pais_Call_Center" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label asp-for="CARGO" class="form-label"></label>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Nombre_Call_Center" class="control-label"></label>
+                        <select asp-for="Nombre_Call_Center" class="form-control" />
+                            <option value="">Selecione Call Center</option>
+                        @foreach (var item in ViewData["Nombre_Call_Center"] as IEnumerable<string> ?? Enumerable.Empty<string>())
+                        {
+                            <option value="@item">@item</option>
+                        }
+                        </select>
+                            <span asp-validation-for="Nombre_Call_Center" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Area" class="control-label"></label>
+                        <select asp-for="Area" class="form-control">
+                            <option value="">Seleccione Área</option>
+                            @foreach (var item in ViewData["Area"] as IEnumerable<string> ?? Enumerable.Empty<string>())
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Area" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="AreaGestion" class="control-label"></label>
+                        <select asp-for="AreaGestion" class="form-control">
+                            <option value="">Seleccione Área de Gestión</option>
+                            @foreach (var item in ViewData["AreaGestion"] as IEnumerable<string> ?? Enumerable.Empty<string>())
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                        <span asp-validation-for="AreaGestion" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Contrato" class="control-label"></label>
+                        <select asp-for="Contrato" class="form-control">
+                            <option value="">Seleccione Contrato</option>
+                            @foreach (var item in ViewData["Contrato"] as IEnumerable<string> ?? Enumerable.Empty<string>())
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Contrato" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Tipos_de_agente" class="control-label"></label>
+                        <select asp-for="Tipos_de_agente" class="form-control">
+                            <option value="">Seleccione Tipo de Agente</option>
+                            @foreach (var item in ViewData["Tipos_de_agente"] as IEnumerable<string> ?? Enumerable.Empty<string>())
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Tipos_de_agente" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Servicio" class="control-label"></label>
+                        <select asp-for="Servicio" class="form-control">
+                            <option value="">Seleccione Servicio</option>
+                            @foreach (var item in ViewData["Servicio"] as IEnumerable<string> ?? Enumerable.Empty<string>())
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Servicio" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Usuarios_RcWeb" class="control-label"></label>
+                        <input asp-for="Usuarios_RcWeb" class="form-control" />
+                        <span asp-validation-for="Usuarios_RcWeb" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Nombre_Jefatura" class="control-label"></label>
+                        <select asp-for="Nombre_Jefatura" class="form-control">
+                            <option value="">Seleccione Jefatura</option>
+                            @foreach (var item in ViewData["Nombre_Jefatura"] as IEnumerable<string> ?? Enumerable.Empty<string>())
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Nombre_Jefatura" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Rut_Ficticio" class="control-label"></label>
+                        <input asp-for="Rut_Ficticio" class="form-control" />
+                        <span asp-validation-for="Rut_Ficticio" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Rut_DNI2" class="control-label"></label>
+                        <input asp-for="Rut_DNI2" class="form-control" />
+                        <span asp-validation-for="Rut_DNI2" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="DV" class="control-label"></label>
+                        <input asp-for="DV" class="form-control" />
+                        <span asp-validation-for="DV" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Clasifica_Cargo" class="control-label"></label>
+                        <input asp-for="Clasifica_Cargo" class="form-control" />
+                        <span asp-validation-for="Clasifica_Cargo" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="CARGO" class="control-label"></label>
                         <input asp-for="CARGO" class="form-control" />
                         <span asp-validation-for="CARGO" class="text-danger"></span>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label asp-for="Fecha_Ingreso" class="form-label"></label>
-                        <input asp-for="Fecha_Ingreso" class="form-control" type="date"
-                               value="@(Model.Fecha_Ingreso.HasValue ? Model.Fecha_Ingreso.Value.ToString("yyyy-MM-dd") : "")" />
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Fecha_Ingreso" class="control-label"></label>
+                        <input asp-for="Fecha_Ingreso" class="form-control" type="number" />
                         <span asp-validation-for="Fecha_Ingreso" class="text-danger"></span>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label asp-for="Fecha_Baja" class="form-label"></label>
-                        <input asp-for="Fecha_Baja" class="form-control" type="date"
-                               value="@(Model.Fecha_Baja.HasValue ? Model.Fecha_Baja.Value.ToString("yyyy-MM-dd") : "")" />
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Fecha_Baja" class="control-label"></label>
+                        <input asp-for="Fecha_Baja" class="form-control" type="number" />
                         <span asp-validation-for="Fecha_Baja" class="text-danger"></span>
                     </div>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label asp-for="N_Personal" class="form-label"></label>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="N_Personal" class="control-label"></label>
                         <input asp-for="N_Personal" class="form-control" type="number" />
                         <span asp-validation-for="N_Personal" class="text-danger"></span>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label asp-for="Correo" class="form-label"></label>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Correo" class="control-label"></label>
                         <input asp-for="Correo" class="form-control" type="email" />
                         <span asp-validation-for="Correo" class="text-danger"></span>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group mt-4 text-center">
-                    <button type="submit" class="btn btn-primary btn-lg me-3">
-                        <i class="fas fa-save me-2"></i>Guardar Cambios
-                    </button>
-                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
-                        <i class="fas fa-times me-2"></i>Cancelar
-                    </a>
-                </div>
-            </form>
-        </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Guardar cambios" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+            </div>
+        </form>
     </div>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
     <script>
         $(document).ready(function() {
-            // Configuración para hacer que todos los campos sean opcionales
+            // Ensure form is using the correct validation
             $("#dotacionForm").removeData("validator");
             $("#dotacionForm").removeData("unobtrusiveValidation");
             $.validator.unobtrusive.parse("#dotacionForm");
 
-            // Seleccionar automáticamente las opciones en los dropdowns
+            // Pre-select selected values in dropdowns
             $('select').each(function() {
                 var select = $(this);
                 var currentValue = select.attr('value') || select.val();
@@ -233,7 +247,7 @@
                 }
             });
 
-            // Manejar el formato de fecha para mostrar en el formato local
+            // Handle date formatting to match local date format
             $("input[type='date']").each(function() {
                 if (this.value) {
                     var date = new Date(this.value);
